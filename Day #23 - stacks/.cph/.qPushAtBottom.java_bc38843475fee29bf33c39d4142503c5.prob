@@ -1,0 +1,1 @@
+{"name":"Local: qPushAtBottom","url":"d:\\JAVA\\Day #23 - stacks\\qPushAtBottom.java","tests":[{"id":1671804553603,"input":"5\n1 2 3 4 5 \n6","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\JAVA\\Day #23 - stacks\\qPushAtBottom.java","group":"local","local":true}

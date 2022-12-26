@@ -1,0 +1,1 @@
+{"name":"Local: q3","url":"d:\\JAVA\\Day #10 - Arrays\\q3.java","tests":[{"id":1668859821642,"input":"6\n7 1 5 3 6 4","output":"5"},{"id":1668859852639,"input":"5\n7 6 4 3 2 ","output":"0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\JAVA\\Day #10 - Arrays\\q3.java","group":"local","local":true}

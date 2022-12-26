@@ -1,0 +1,1 @@
+{"name":"Local: multidimentionalAL","url":"d:\\JAVA\\Day #20 - arraylist\\multidimentionalAL.java","tests":[{"id":1671030700578,"input":"3\n5\n1 2 3 4 5\n5 \n2 4 6 8 10\n5 \n3 6 9 12 15","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\JAVA\\Day #20 - arraylist\\multidimentionalAL.java","group":"local","local":true}

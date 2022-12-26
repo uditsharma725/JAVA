@@ -1,0 +1,1 @@
+{"name":"Local: stringCompression","url":"d:\\JAVA\\Day #13 - strings\\stringCompression.java","tests":[{"id":1669605109162,"input":"abcdeffffggfffgg","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\JAVA\\Day #13 - strings\\stringCompression.java","group":"local","local":true}
