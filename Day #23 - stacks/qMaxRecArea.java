@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class qImportant {
+public class qMaxRecArea {
 
     public static int maxArea(ArrayList<Integer> nums) {
         int area = -1;
