@@ -41,7 +41,7 @@ public class diameterA1 {
             int lh = height(root.left);
             int rh = height(root.right);
 
-            int sd = lh + rh + 1;
+            int sd = lh + rh;
 
             return Math.max(sd, Math.max(ld, rd));
         }

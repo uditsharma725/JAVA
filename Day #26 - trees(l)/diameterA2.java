@@ -46,7 +46,7 @@ public class diameterA2 {
             int sd = left.height + right.height + 1;
 
             int h = Math.max(left.height, right.height) + 1;
-            int d = Math.max(sd, Math.max(left.diameter, right.diameter)) + 1;
+            int d = Math.max(sd, Math.max(left.diameter, right.diameter));
         
             return new Info(h, d);
         }
