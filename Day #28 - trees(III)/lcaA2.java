@@ -34,10 +34,8 @@ public class lcaA2 {
             Node left = LCA(root.left, n1, n2);
             Node right = LCA(root.right, n1, n2);
 
-            if(left == null) return right;
-            if(right == null) return left;
-
-            return root;
+            if(left!=null && right!=null) return root;
+            return (left != null ? left : right);
         }
     }
 
@@ -50,7 +48,7 @@ public class lcaA2 {
             int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
             Node root = tree.build(nodes);
 
-            System.out.print(tree.LCA(root, 4, 5).data);
+            System.out.print(tree.LCA(root, 4, 3).data);
 
         } finally {
             sc.close();
