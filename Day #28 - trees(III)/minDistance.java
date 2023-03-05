@@ -48,9 +48,7 @@ public class minDistance {
             int right = distance(root.right, n);
 
             if(left == -1 && right == -1) return -1;
-            else if(left == -1) return right + 1;
-            
-            return left + 1; 
+            return (left == -1 ? right+1 : left+1);
         }
     }
 
