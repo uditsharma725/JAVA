@@ -45,7 +45,7 @@ public class deleteNode {
 
             Node IS = successor(root.right);
             root.data = IS.data;
-            del(root.right, IS.data);
+            root.right = del(root.right, IS.data);
         }
 
         return root;
