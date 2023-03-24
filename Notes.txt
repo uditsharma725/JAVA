@@ -1,0 +1,262 @@
+KSM - 18 = day 1
+0 1 2 3 4 5 6 7 
+
+
+Stack:
+													
+1.Push at bottom
+    -> when empty push element
+    -> top = s.pop()
+    -> push(top) in backtracking
+
+2. Reverse Stack
+    -> top = s.pop()
+    -> reverse(s)
+    -> push at bottom(s, top) backtracking step
+
+
+
+Queue:
+
+1.
+
+
+ 
+Linked List:
+
+1. 
+
+
+
+Recursion & Backtracking:
+
+1. Subset
+    -> Yes condition (ans + character)
+    -> No condition (ans, pass empty string)
+
+2. Permutation
+    -> for loop (recursion inside it)
+    -> newString = substr(0, i) + substr(i+1)
+    -> func( newString, ans + c)
+    -> c = character remove from original string
+
+3. Qiuck Sort
+    -> s >= e return
+    -> pivot = choose the last element
+    -> i = starting index - 1
+    -> arr[j] < pivot = perform swap
+    -> call for left and right part of pivot
+
+4. Merge Sort
+    -> s >= e return
+    -> call for s to mid and mid+1 to e
+    -> perform merge on left and right part
+    -> left = mid-s+1 (size)  arr[i+s]
+    -> right = e-mid (size)   arr[i+mid+1]
+
+
+
+BT (Binary Tree):
+
+1. kth ancestor of a node 
+   -> max == left,right + 1
+   -> null == return -1 
+   -> left and right -1 return -1 
+   -> found == return 0
+
+2. Lowest Common Ancestor
+    -> found return root
+    -> left and right != null return root
+    -> one null return other
+
+3. Min distance b/w 2 nodes
+    -> find LCA
+    -> null return -1, found return 0
+    -> left,right == -1 return -1
+    -> one null return other+1
+
+4. Tronsform to Sum Tree
+    -> data = root.data (return at end);
+    -> newLeft 0(null) else .data - same for right
+    -> root.data = nL + nR + L + R
+
+5. Top View
+    -> use queue and hashmap
+    -> info class = hd & node
+    -> lvl order traversal
+
+6. Sub tree of another tree ***
+    (covers 2-3 questions)
+    -> root == subRoot call isIdentical
+    -> return root.left, subRoot || root.right, subRoot
+    -> isIdentical:
+	both null = false
+	one null || root.data != subRoot.data = false;
+	call for left (not case) = false
+	call for right (not case) = false
+
+
+
+BST (Binary Search Tree):
+
+1. Delete node
+    -> 1st check for node in left and right of tree
+    -> no child = return null
+    -> 1 child = return (left || right) whichever is not null
+    -> 2 children = inorderSuccessor
+    -> IS = left most child of right tree
+    -> root.data = IS.data then delete (root.right)
+
+2. Root - Leaf paths
+    -> parameter = root, AL
+   -> each step add root.data to AL
+   -> l & r == null output AL data
+   -> run for left and right
+   -> backtracking AL.remove(AL.size() - 1)
+
+3. Validate BST
+    -> null = return true
+    -> max!=null and left > max same for right (min)
+    -> left = min(null), max(root)
+    -> right = min(root), max(null)
+    -> finally return (left && right)
+
+4. Sorted array to BST 
+    -> array(arr)  start(s) end(e)
+    -> s > e = return null
+    -> using mid create a new node
+    -> left = s to mid-1
+    -> right = mid+1 to e
+
+5. Larges BST ***
+    -> Info (isBST, size, min, max)
+    -> root == null (true, 0, +infinity, -infinity)
+    -> call for left and right
+    -> root.data <= left.max || >=right.min (false condition)
+    -> left.isBST && right.isBST == true update max(maxBST, size)
+    -> lastly return false condition
+
+6. Merge 2 BST:
+    -> AL <Integer> inorder
+    -> add values in AL = inorder from both BSTs
+    -> sort (inorder)
+    -> inorder (sorted array) to BST
+
+
+
+Heap (Priority Queues):
+
+-> PriorityQueue <Integer> pq = new PriorityQueue<>( Comparator.reverseOrder() );
+    -> to sort the priority queue in descending order.
+
+-> class Name implements Comparable<Name> 
+    @override
+    public compareTo(Name n)
+              return ( this.rank - n.rank )   (ascending order)
+	    return ( n.rank - this.rank )   (descending order)
+
+-> children <= parent (max heap)
+-> children >= parent (min heap)
+
+-> parent = (index-1)/2
+-> left = 2*index + 1		(0 based indexing)
+-> right = 2*index + 2
+
+-> CBT(complete binary tree):
+    It is a tree which has all the levels completely filled
+    except the last left, node are fill from left to right.
+         
+1. Sliding Window:
+    -> PriorityQueue of Pair class type
+    -> Pair class uses implements Comparable function (val, idx)
+    -> p.val - this.val (descending order)
+    -> add first k elements to PQ 
+    -> res array = n-k+1 (size of the answer array) 
+    -> res[0] = p.peek().val (the first value in our priority queue)
+    -> while index of 1st element in pq is <= (i-k) => q.remove() 
+
+
+
+Hashing:
+
+-> HashMap <key(type), value(type)> m = new HashMap<>()    (no defined order of element)
+-> LinkedHashMap <K,V> m = new LinkedHashMap<>()    (output elements in the same order added to the map)
+-> TreeMap <K,V> m = new TreeMap<>()    (stored and outputs element in sorted order, sorting based on keys)
+
+1. Majority Element
+    -> let number be the key and occurence the value
+    -> if m.contains(number) increase occurence
+    -> output the max occured m.get(key) > max (update max)
+
+2. Anagram
+    -> add the characters of 1st string into a hashMap
+    -> HashMap < Character, Integer (occurence) > m = new HM<>()
+    -> check if( m.get(character of 2nd string) != null) exists in map or not
+    -> now compare if(m.get(character of 2nd string) == 1) m.remove(ch)
+    -> else decrease the value of occurence ( m.put(ch, m.get(ch)-1) )
+    -> if does not exists in 1st string (map) return false
+    -> if map isEmpty() return true  ( return m.isEmpty() )
+
+3. Subarray Sum 0**
+    -> HashMap <sum, index> m => we will store the index of sum
+    -> if we find sum in our map update len (largest subarray)
+    -> subLen = j - m.get(sum) length of the subarray with sum 0 
+    -> compare it with len = Math.max(len, subLen)   
+
+*Here if we get the sum again at any point in the array it means that the sum 
+  we calculated has already occured before in the array and if we take the 
+  sum of the elements between the current index (where we found the sum) 
+  and the previous index+1 (where we found the sum 1st time) it would be 0.
+  j - m.get(sum) would give us the length of the current subarray with sum = 0.
+  This works only when we need to find the subarray with max length, we can
+  output the largest subarray but we cannout output all the subarrays with 0 sum.  	
+
+4. Subarray Sum k***
+    -> sum(j)-sum(i) == k we can deduce  sum(j)-k == sum(i)
+    -> HashMap <sum, count> m => we would store freqency of sum
+    -> put sum=0 and count=1 by default in the map
+    -> if we find the sum-k in our map we would update the ans
+    ->  ans += m.get(sum-k) => here we will add the count of the sum in ans
+    -> we would always store our sum/increase its frequency in each step
+    -> m.get(sum, m.getOrDefault(sum, 0)+1)
+    -> lastly output the ans
+
+
+-> HashSet <Integer> s = new HashSet<>() (unodered, no defined order
+	-> Iterator it = set.iterator()
+  	-> while(it.hasNext()) sot( it.next() )	
+	-> for(dataType variableName : HashSet_Name)
+
+-> LinkedHashSet <Integer> s = new HashSet<>()  (output in the same order we inputed)
+-> TreeSet <Integer> s = new TreeSet<>()  (sorted in ascending order)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
