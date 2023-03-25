@@ -1,5 +1,5 @@
 KSM - 18 = day 1
-0 1 2 3 4 5 6 7 
+0 1 2 3 4 5 6 7 8  
 
 
 Stack:
@@ -18,13 +18,26 @@ Stack:
 
 Queue:
 
-1.
+1. 1st Non-repeating letter **
+    -> a freqency arr[26] and a Character queue
+    -> loop the string => c = s.charAt(i)
+    -> increase the freqence of character freq[c-'a']++
+    -> add the character (c) to the queue
+    -> remove "c" from queue while !isEmpty() and freq[q.peek()-'a'] > 1
+    -> if q.isEmpty() sot("-1") else sot(q.peek())
+
+2. Interleave two halfs of Queue
+    *even length case only possible
+    -> add last half element of queue in another queue
+    -> create a final queue using the two queues
+    -> add 1st element from Q1 and 2nd element from Q2
 
 
- 
+
 Linked List:
 
-1. 
+1. Reverse Linked List
+    -> 
 
 
 
