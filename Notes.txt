@@ -1,5 +1,5 @@
 KSM - 18 = day 1
-0 1 2 3 4 5 6 7 8  
+0 1 2 3 4 5 6 7 8 9 10
 
 
 Stack:
@@ -37,7 +37,34 @@ Queue:
 Linked List:
 
 1. Reverse Linked List
-    -> 
+    -> point the tail at the head
+    -> Three pointers prev, curr and nxt
+    -> prev = null, curr = head and nxt = curr.next (initially its null)
+    -> while ( curr != null): 
+	inside the while loop initialize the nxt pointer to curr.next,
+        	we would reverse the links between the nodes by pointing the 
+ 	curr.next to the prev pointer and the next of the nxt pointer 
+	to the curr pointer, after this we would update the prev pointer
+	to point at curr pointer and the curr pointer will point at nxt.
+    -> lastly we would update our original head == prev.
+
+2. Detect and Remove Cycle (Floyd's Algo)
+* we use fast and slow pointer appoach to find the cycle in the linked list.
+    -> fast += 2 and slow += 1
+    -> if they meet at any point which means a cycle exists in the linked list (LL)
+    -> when they meet stop the loop and initialize slow with head (slow == head)
+    -> use a prev pointer to track the prev node (prev = fast inside while loop)
+    -> increase both fast and slow pointer by 1 (while slow != fast)
+    -> when they meet again => prev.next = null
+
+3. Check Palindrome**
+*we can simply push the elements of our linked list in an arrayList and
+check if the arrayList is a palindrome but we would be using the slow 
+fast pointer approach to find the center of linked list and the concept 
+of reversing half linked list.
+    -> find the middle of the list
+    -> reverse the second half of the list
+    -> compare the 1st and the reversed 2nd half of the list
 
 
 
@@ -72,7 +99,7 @@ Recursion & Backtracking:
 BT (Binary Tree):
 
 1. kth ancestor of a node 
-   -> max == left,right + 1
+   -> max == left, right + 1
    -> null == return -1 
    -> left and right -1 return -1 
    -> found == return 0
@@ -237,8 +264,8 @@ Hashing:
 
 -> HashSet <Integer> s = new HashSet<>() (unodered, no defined order
 	-> Iterator it = set.iterator()
-  	-> while(it.hasNext()) sot( it.next() )	
-	-> for(dataType variableName : HashSet_Name)
+  	-> while ( it.hasNext() ) sot( it.next() )	
+	-> for ( dataType variableName : HashSetName )
 
 -> LinkedHashSet <Integer> s = new HashSet<>()  (output in the same order we inputed)
 -> TreeSet <Integer> s = new TreeSet<>()  (sorted in ascending order)
