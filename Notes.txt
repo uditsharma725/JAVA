@@ -1,7 +1,3 @@
-KSM - 18 = day 1
-0 1 2 3 4 5 6 7 8 9 10
-
-
 Stack:
 													
 1.Push at bottom
@@ -65,6 +61,19 @@ of reversing half linked list.
     -> find the middle of the list
     -> reverse the second half of the list
     -> compare the 1st and the reversed 2nd half of the list
+
+4. Mergesort
+    -> first find the mid of the linked list
+    -> return type of the function will be node
+    -> right head will be the next of mid
+    -> point the next of mid to null this would create to linked list
+    -> for left part call for head and for right call for mid.next
+    -> lastly call the merge function
+    -> create a new linked list with a single node(-1) and temp pointing at its head
+    -> merge function will be similar to the one used in arrays
+
+5. Reverse DLL
+* just add a line curr.prev = next in the code we used to reverse a SLL.
 
 
 
