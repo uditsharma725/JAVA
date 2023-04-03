@@ -103,36 +103,73 @@ Recursion & Backtracking:
     -> left = mid-s+1 (size)  arr[i+s]
     -> right = e-mid (size)   arr[i+mid+1]
 
+5. nQueens 
+    -> have a char[][] 2d array i.e. board[][] = new char[n][n] of size n X n
+    -> a row variable to track the no. of rows
+    -> when the row becomes 0 print he board and return
+    -> for every board[row][col] put it equal to 'Q'
+    -> call the recursive function function and increase the row by one
+    -> remve the 'Q' from board[row][col] == 'x' in the backtracking step
+    -> create and isSafe function to check if the position of the queen is safe or not:
+	1. check straight upwards (col remains constant)
+	2. check diagnol left
+	3. check diagnol right (tricky one)
+
 
 
 BT (Binary Tree):
 
-1. kth ancestor of a node 
-   -> max == left, right + 1
-   -> null == return -1 
-   -> left and right -1 return -1 
-   -> found == return 0
+1. Level Order Traversal
+    -> create a Queue <Node> q = new LinkedList<>();
+    -> run a while loop until q is empty
+    -> remove the 1st element from 'q' and store in a curr node
+    -> if curr is null there are two cases:
+ 	1. if 'q' gets empty break
+	2. else print next line and add null to 'q'
+    -> if curr is not null then:
+	1. print the data
+	2. add curr.left if exists
+	3. add curr.right if exists
 
-2. Lowest Common Ancestor
-    -> found return root
-    -> left and right != null return root
+2. kth ancestor of a node 
+   -> found == return 0
+   -> root is null == return -1 
+   -> call for left and right
+   -> left && right == -1 return -1 
+   -> max == Math.max(left, right) + 1
+
+3. Lowest Common Ancestor
+    -> root == null return null
+    -> found a || b return root
+    -> call for left and right
+    -> left && right != null return root
     -> one null return other
 
-3. Min distance b/w 2 nodes
+4. Min distance b/w 2 nodes
     -> find LCA
     -> null return -1, found return 0
-    -> left,right == -1 return -1
-    -> one null return other+1
+    -> call for left and right
+    -> left, right == -1 return -1
+    -> one null return other + 1
 
-4. Tronsform to Sum Tree
+5. Tronsform to Sum Tree
+    -> root == null return 0
+    -> call for left and right
     -> data = root.data (return at end);
-    -> newLeft 0(null) else .data - same for right
+    -> newLeft(nL) == 0 if (root.left == null) else root.left.data
+    -> newRight(nR) == 0 if(root.right == null) else root.right.data
     -> root.data = nL + nR + L + R
 
-5. Top View
+6. Top View
     -> use queue and hashmap
-    -> info class = hd & node
-    -> lvl order traversal
+    -> create an Info class to store horizontal distance and the node
+    -> create queue using Info class
+    -> create hashMap with hd as the key and node as the value
+    -> take min and max variable to store the min hd and max hd
+    -> now run the while loop until q.is not empty
+    -> use Info curr = q.remove() and if curr == null check if q.is empty or not(break if empty)
+    -> else check if map does not contain the hd and add the node add hd to the map
+    -> if node left is not null update the min and add left of node to queue same for right
 
 6. Sub tree of another tree ***
     (covers 2-3 questions)
@@ -148,8 +185,8 @@ BT (Binary Tree):
 
 BST (Binary Search Tree):
 
-1. Delete node
-    -> 1st check for node in left and right of tree
+1. Delete node‎
+    -> 1st check for node in left and right of tree 
     -> no child = return null
     -> 1 child = return (left || right) whichever is not null
     -> 2 children = inorderSuccessor
@@ -271,13 +308,38 @@ Hashing:
     -> lastly output the ans
 
 
--> HashSet <Integer> s = new HashSet<>() (unodered, no defined order
+-> HashSet <Integer> s = new HashSet<>() (unodered, no defined order)
 	-> Iterator it = set.iterator()
   	-> while ( it.hasNext() ) sot( it.next() )	
 	-> for ( dataType variableName : HashSetName )
 
 -> LinkedHashSet <Integer> s = new HashSet<>()  (output in the same order we inputed)
 -> TreeSet <Integer> s = new TreeSet<>()  (sorted in ascending order)
+
+
+
+Tries:
+* tries are prefix trees also known as re'trie'val (the name comes from here) trees which work 
+on prefix of words, the are k-nary trees and are bulky, requires huge amount of space but gives us 
+a nice time complexity. as the height of the tree decreases the time complexity of also decreases.
+k-nary -> number of children of a node can be from 0 to k.
+
+Creating
+    -> define a Node class with an array of nodes[26] and a boolean EndOfWord (eow)
+    -> create a constructor and initialize nodes[26] = null using forLoop
+    -> create root node ( Node root = new Node() ) that remains empty
+Inserting
+    -> initialize a curr node == root node
+    -> traverse the given word and store the index of the character in idx variable
+    -> if the character does not exist create a node 
+    -> point curr at the children that exists/ is created 
+    -> after exiting the for loop eow == true
+Searching
+same as inserting just if the index does not exist return false and at the end return eow
+if true then true else false.
+
+1. Word Break ***
+    -> 
 
 
 
