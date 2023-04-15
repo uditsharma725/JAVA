@@ -31,7 +31,7 @@ public class qFindPrefix {
         curr.eow = true;
     }
     
-    public static void prefix(Node root, String ans) {
+    public static void prefix(Node root, StringBuilder ans) {
         if(root == null) return;
         if(root.freq == 1) {
             System.out.print(ans + " ");
@@ -39,8 +39,12 @@ public class qFindPrefix {
         }
 
         for(int i=0; i<root.children.length; i++) {
-            if(root.children[i] != null)
-            prefix(root.children[i], ans + (char)(i+'a'));
+            if(root.children[i] != null){
+                char c = (char)(i+'a');
+                ans.append(c);
+                prefix(root.children[i], ans);
+                ans.deleteCharAt(ans.length()-1);
+            }
         }
     }
 
@@ -53,7 +57,7 @@ public class qFindPrefix {
             for(int i=0; i<words.length; i++) insert(words[i]);
 
             root.freq = -1;
-            prefix(root, "");
+            prefix(root, new StringBuilder(""));
 
         } finally {
             sc.close();

@@ -185,7 +185,15 @@ BT (Binary Tree):
 
 BST (Binary Search Tree):
 
-1. Delete node‎
+1. Build BST 
+    -> pass root and the data to the function
+    -> if root is null make root the new Node containing data and return it
+    -> if data is smaller than root.data then insert in the left subtree
+    -> if data is greater than root.data then insert in the right subtree
+    -> return root in the end
+    -> print inorder sequence to check if the tree build is correct or not
+
+2. Delete node‎
     -> 1st check for node in left and right of tree 
     -> no child = return null
     -> 1 child = return (left || right) whichever is not null
@@ -193,36 +201,40 @@ BST (Binary Search Tree):
     -> IS = left most child of right tree
     -> root.data = IS.data then delete (root.right)
 
-2. Root - Leaf paths
+3. Root - Leaf paths
     -> parameter = root, AL
    -> each step add root.data to AL
    -> l & r == null output AL data
    -> run for left and right
    -> backtracking AL.remove(AL.size() - 1)
 
-3. Validate BST
+4. Validate BST
     -> null = return true
     -> max!=null and left > max same for right (min)
     -> left = min(null), max(root)
     -> right = min(root), max(null)
     -> finally return (left && right)
 
-4. Sorted array to BST 
+5. Sorted array to BST 
     -> array(arr)  start(s) end(e)
     -> s > e = return null
     -> using mid create a new node
     -> left = s to mid-1
     -> right = mid+1 to e
+    -> use preorder to check if the function is correct
 
-5. Larges BST ***
+6. Larges BST ***
     -> Info (isBST, size, min, max)
     -> root == null (true, 0, +infinity, -infinity)
     -> call for left and right
+    -> calculate size = left.size + right.size + 1
+    -> calculate min from root.data, left.min and right.min
+    -> calculate max from root.data, left.max and right.max
     -> root.data <= left.max || >=right.min (false condition)
     -> left.isBST && right.isBST == true update max(maxBST, size)
     -> lastly return false condition
 
-6. Merge 2 BST:
+7. Merge 2 BST:
     -> AL <Integer> inorder
     -> add values in AL = inorder from both BSTs
     -> sort (inorder)
@@ -321,7 +333,7 @@ Hashing:
 Tries:
 * tries are prefix trees also known as re'trie'val (the name comes from here) trees which work 
 on prefix of words, the are k-nary trees and are bulky, requires huge amount of space but gives us 
-a nice time complexity. as the height of the tree decreases the time complexity of also decreases.
+a nice time complexity, as the height of the tree decreases the time complexity of also decreases.
 k-nary -> number of children of a node can be from 0 to k.
 
 Creating
@@ -332,15 +344,37 @@ Inserting
     -> initialize a curr node == root node
     -> traverse the given word and store the index of the character in idx variable
     -> if the character does not exist create a node 
-    -> point curr at the children that exists/ is created 
+    -> point curr at the children that exists/is created 
     -> after exiting the for loop eow == true
 Searching
 same as inserting just if the index does not exist return false and at the end return eow
-if true then true else false.
 
 1. Word Break ***
-    -> 
+    -> insert the array of words into a trie
+    -> create a function wordBreak that takes the key as the input
+    -> using a for loop traverse the key string
+    -> search for the key.substring(0,i) in the try
+    -> call wordBreak for the left part if the key.substring(i)
+    -> if both gives the ouput as true return true
+    -> if the length of key becomes 0 return true (base condition)
+    -> finally return false 
 
+2. Prefix Problem ***
+    -> add another property frequency(freq) to the Node class
+    -> initialise it by 1 when creating a Node
+    -> insert the node and if already present increase the freqency
+
+*Note: frequency of root node should be initialized as -1 before passing to the function
+    -> pass two parameters root and an empty string (ans) to the function
+    -> if root becomes null return
+    -> if the freq of root becomes 1 output the answer and then return
+    -> traverse all the childrens of root using a for loop
+    -> if the children is not null call the function for the children and add the word to the an
+    -> if we are using stringBuilder (inside for loop):
+                char c = (char)(i+'a');
+                ans.append(c);
+                prefix(root.children[i], ans);
+                ans.deleteCharAt(ans.length()-1);
 
 
 
