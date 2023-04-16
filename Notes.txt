@@ -14,7 +14,7 @@ Stack:
 
 Queue:
 
-1. 1st Non-repeating letter **
+1. 1st Non-repeating letter ***
     -> a freqency arr[26] and a Character queue
     -> loop the string => c = s.charAt(i)
     -> increase the freqence of character freq[c-'a']++
@@ -53,7 +53,7 @@ Linked List:
     -> increase both fast and slow pointer by 1 (while slow != fast)
     -> when they meet again => prev.next = null
 
-3. Check Palindrome**
+3. Check Palindrome **
 *we can simply push the elements of our linked list in an arrayList and
 check if the arrayList is a palindrome but we would be using the slow 
 fast pointer approach to find the center of linked list and the concept 
@@ -89,21 +89,21 @@ Recursion & Backtracking:
     -> func( newString, ans + c)
     -> c = character remove from original string
 
-3. Qiuck Sort
+3. Qiuck Sort **
     -> s >= e return
     -> pivot = choose the last element
     -> i = starting index - 1
     -> arr[j] < pivot = perform swap
     -> call for left and right part of pivot
 
-4. Merge Sort
+4. Merge Sort **
     -> s >= e return
     -> call for s to mid and mid+1 to e
     -> perform merge on left and right part
-    -> left = mid-s+1 (size)  arr[i+s]
-    -> right = e-mid (size)   arr[i+mid+1]
+    -> left = 0 to mid-s+1 (size)  arr[i+s]
+    -> right = 0 to e-mid (size)   arr[i+mid+1]
 
-5. nQueens 
+5. nQueens ***
     -> have a char[][] 2d array i.e. board[][] = new char[n][n] of size n X n
     -> a row variable to track the no. of rows
     -> when the row becomes 0 print he board and return
@@ -359,7 +359,7 @@ same as inserting just if the index does not exist return false and at the end r
     -> if the length of key becomes 0 return true (base condition)
     -> finally return false 
 
-2. Prefix Problem ***
+2. Prefix Problem *****
     -> add another property frequency(freq) to the Node class
     -> initialise it by 1 when creating a Node
     -> insert the node and if already present increase the freqency
@@ -376,31 +376,29 @@ same as inserting just if the index does not exist return false and at the end r
                 prefix(root.children[i], ans);
                 ans.deleteCharAt(ans.length()-1);
 
+3. Longest word with all Prefixes
+    -> declare an ans string outside the function (global variable)
+    -> pass the root and a stringBuilder(SB) to the function
+    -> travese each children using a for loop
+    -> if root.children[i] is not null and eow is true append the char in SB
+    -> update ans with temp value if the temp is greater than the ans string
+    -> call function for the children
+    -> remove the last letter from the temp in backtracking step 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+4. Unique Substrings ***
+(unique concept of prefix and suffix used in this question)
+Trie is also known as prefix tree that stores all the unique prefix of given words. Like in array of words
+arr[] = {'apple', 'app', 'apple'} the prefix 'app' has occured 3 times but the Trie would store it only once.
+So we will store all the prefix of all the suffix of the given string in the Trie.
+    -> using a for loop traverse the given string
+    -> create substring (suffix) by removing the first letter i.e str.substring(i)
+    -> insert the substring in the Trie data structure
+    -> now we have to count the number of nodes present in the Trie
+    -> if root becomes null return 0
+    -> use for loop to traverse all the children
+    -> if any children is not null add it to the count
+    -> call the function for that child
+    -> lastly return count + 1 (1-> the root node)
 
 
 
