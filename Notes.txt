@@ -122,64 +122,93 @@ BT (Binary Tree):
 1. Level Order Traversal
     -> create a Queue <Node> q = new LinkedList<>();
     -> run a while loop until q is empty
-    -> remove the 1st element from 'q' and store in a curr node
+    -> Node curr = q.remove()
     -> if curr is null there are two cases:
  	1. if 'q' gets empty break
-	2. else print next line and add null to 'q'
+	2. else print next line and add 'null' to queue
     -> if curr is not null then:
 	1. print the data
-	2. add curr.left if exists
-	3. add curr.right if exists
+	2. add curr.left to the queue if it exists
+	3. add curr.right to the queue if it exists
 
 2. kth ancestor of a node 
-   -> found == return 0
-   -> root is null == return -1 
-   -> call for left and right
-   -> left && right == -1 return -1 
-   -> max == Math.max(left, right) + 1
+    -> create a function 'kth' that takes root node, n and k as the input
+    -> if root becomes null return -1
+    -> if we found n i.e root.data == n then return 0
+    -> call for root.left and store in int left
+    -> call for root.right and store in int right
+    -> if both are -1 return -1 to the main function
+    -> else create a max variable and store max of both (left, right) +1 in it
+    -> if max == k print root.data
+    -> lastly return max
 
 3. Lowest Common Ancestor
-    -> root == null return null
-    -> found a || b return root
-    -> call for left and right
-    -> left && right != null return root
-    -> one null return other
+    -> create a function 'lca' that takes root node an int 'a' and 'b' as the input
+    -> if root becomes null return null
+    -> if root.data become equal to either a or b return root
+    -> call for root.left and store in Node left
+    -> call for root.right and store in Node right
+    -> if both left and right are not null return root
+    -> lastly if left becomes null return right and vice versa
+    (return left == null ? right : left)
 
 4. Min distance b/w 2 nodes
-    -> find LCA
-    -> null return -1, found return 0
-    -> call for left and right
-    -> left, right == -1 return -1
-    -> one null return other + 1
+    -> create a distance function that takes root node, a and b as inputs
+    -> find the LCA of a & b and store it in Node lca
+    -> find distance b/w lca and 'a' using distUtil function and store in int d1
+    -> find distance b/w lca and 'b' using distUtil function and store in int d2
+    -> return d1 + d2 from distance function
+    -> distUtil function takes the lca and n as the input
+    -> if root becomes null return -1
+    -> if root.data becomes equal to n return 0
+    -> call for root.left and store in int left
+    -> call for root.right and store in int right
+    -> if both become -1 return -1
+    -> if one of the two becomes -1 return the other variable+1
+    (return left == -1 ? right+1 : left+1)
 
 5. Tronsform to Sum Tree
-    -> root == null return 0
-    -> call for left and right
-    -> data = root.data (return at end);
-    -> newLeft(nL) == 0 if (root.left == null) else root.left.data
-    -> newRight(nR) == 0 if(root.right == null) else root.right.data
-    -> root.data = nL + nR + L + R
+    -> if root == null return 0;
+    -> call for the left and store in int left
+    -> call for the right and store in int right
+    -> create a variable data and assign it with root.data
+    -> root.left == null ? 0 : root.left.data, store the value in newLeft
+    -> root.right == null ? 0 : root.right.data, store the value in newRight
+    -> now change value of root.data with (left + right + newLeft + newRight)
+    -> lastly return data (it contains the value of the root node) 
 
 6. Top View
-    -> use queue and hashmap
-    -> create an Info class to store horizontal distance and the node
-    -> create queue using Info class
-    -> create hashMap with hd as the key and node as the value
-    -> take min and max variable to store the min hd and max hd
-    -> now run the while loop until q.is not empty
-    -> use Info curr = q.remove() and if curr == null check if q.is empty or not(break if empty)
-    -> else check if map does not contain the hd and add the node add hd to the map
-    -> if node left is not null update the min and add left of node to queue same for right
+    -> create a Info class that has an int hd (horizontal distance) and Node node
+    -> using Info class create a Queue
+    -> create a HashMap <Integer, Node>  m
+    -> create two variables min and max to store the min and max node (initially zero)
+    -> add new Info(0, root) to the queue as the distance of root node is zero
+    -> same as lvlOrder traversal add null to the queue
+    -> traverse the queue using while loop 
+    -> Info curr = q.remove()
+    -> if curr is null:
+	1. if q becomes empty then break the loop
+   	2. else add null to the queue
+    -> else check if the curr.hd exists in the map or not
+    -> if does not exist then put the curr.node and curr.hd in the map
+    -> if curr.left.node is not null add new Info(curr.hd-1, curr.node.left) to the queue
+    -> in the same if statement update min = Math.min(min, curr.hd-1)
+    -> if curr.right.node is not null add new Info(curr.hd-1, curr.node.right) to the queue
+    -> in the same if statement update max = Math.max(max, curr.hd+1)
+    -> after while loop run a for loop from min to max and output map.get(i).data
 
 6. Sub tree of another tree ***
     (covers 2-3 questions)
-    -> root == subRoot call isIdentical
-    -> return root.left, subRoot || root.right, subRoot
-    -> isIdentical:
-	both null = false
-	one null || root.data != subRoot.data = false;
-	call for left (not case) = false
-	call for right (not case) = false
+    -> create a function check that take to inputs Node root and Node subroot
+    -> if root == null return false
+    -> if root.data == subroot.data call isIdentical function
+    -> if isIdentical gives true return true to the main function
+    -> lastly return check(root.left, subroot) || check(root.right, subroot)
+    -> in isIdentical function first check if root == null && subroot == null, return true
+    -> else if root == null || subroot == null || root.data != subroot.data then return false
+    -> now if isIdentical(root.left, subroot) gives false return false to the main function
+    -> and if isIdentical(root.right, subroot) gives false return false to the main function
+    -> lastly return true in isIdentical function
 
 
 
@@ -190,49 +219,68 @@ BST (Binary Search Tree):
     -> if root is null make root the new Node containing data and return it
     -> if data is smaller than root.data then insert in the left subtree
     -> if data is greater than root.data then insert in the right subtree
-    -> return root in the end
+    -> lastly return root return root
     -> print inorder sequence to check if the tree build is correct or not
 
 2. Delete node‎
-    -> 1st check for node in left and right of tree 
-    -> no child = return null
-    -> 1 child = return (left || right) whichever is not null
-    -> 2 children = inorderSuccessor
-    -> IS = left most child of right tree
-    -> root.data = IS.data then delete (root.right)
+    -> create a function that takes the root node an the value (to be deleted) as inputs
+    -> if data is greater than the root node call the funtion for the right subtree
+    -> else if data is smaller than the root node call the fucntion for the left subtree
+    -> else, this is the case we found the node to be deleted
+    -> inside the else statement delete the node 
+    -> 1st case check is root.right and root.left both are null, if yes return null
+    -> 2nd case check if root.right is null, if so return root.left
+    -> root.left is null return root.right
+    -> 3rd case find the inorder successor and then delete the node
+    -> inorder successor is the left most node in the right subtree of a node
+    -> update root.data with inorder successor.data
+    -> root.right = delete(root.right, inorder successor.data)
+    -> in the end return root
 
 3. Root - Leaf paths
-    -> parameter = root, AL
-   -> each step add root.data to AL
-   -> l & r == null output AL data
-   -> run for left and right
-   -> backtracking AL.remove(AL.size() - 1)
+    -> create a function that takes the root node and an AL <Integer> path
+    -> if root == null return
+    -> add the root.data to the path
+    -> if both left and right nodes become null print the AL 'path'
+    -> call the function for root.left
+    -> call the function for root.right
+    -> remove the last element from the AL 'path'
+    -> backtracking step: path.remove(path.size() - 1)
 
 4. Validate BST
-    -> null = return true
-    -> max!=null and left > max same for right (min)
-    -> left = min(null), max(root)
-    -> right = min(root), max(null)
-    -> finally return (left && right)
+    -> create a boolean function that takes three nodes as input: root, min and max
+    -> if root == null return true
+    -> if the min node is not null and its data is greater than the root.data return false
+    -> else if max node is not null and its data is smaller than the root.data return false
+    -> call for the left and pass root as the max 
+    -> call for the right as pass root as the min
+    -> lastly return (left && right)
 
 5. Sorted array to BST 
-    -> array(arr)  start(s) end(e)
-    -> s > e = return null
-    -> using mid create a new node
-    -> left = s to mid-1
-    -> right = mid+1 to e
-    -> use preorder to check if the function is correct
+    -> create a function that takes an array, start and ending index as inputs
+    -> if the s (starting index) becomes greater than e (ending index) return null
+    -> calculate min i.e. (s+e)/2
+    -> create a node using arr[mid] 
+    -> call for root.left = create(arr, s, mid-1)
+    -> call for root.right = create(arr, mid+1, e)
+    -> lastly return the root node
 
 6. Larges BST ***
-    -> Info (isBST, size, min, max)
-    -> root == null (true, 0, +infinity, -infinity)
-    -> call for left and right
-    -> calculate size = left.size + right.size + 1
-    -> calculate min from root.data, left.min and right.min
-    -> calculate max from root.data, left.max and right.max
-    -> root.data <= left.max || >=right.min (false condition)
-    -> left.isBST && right.isBST == true update max(maxBST, size)
-    -> lastly return false condition
+    -> create a global varialble => int maxBst = 0
+    -> create a Info class that stores isBst(boolean), size, min and max of a BST
+    -> create a Info type function that take root node as the input
+    -> if root == null return new Info with:
+	isBst = true, size = 0, min = +infinity and max = -infinity
+    -> call for left and store in Info left variable
+    -> call for right and store in Info right variable
+    -> now size = left.size + right.size + 1
+    -> min = min of root.data and min of (left.min and right.min)
+    -> max = max of root.data and max of (left.max and right.max)
+    -> if root.data is less than left.max || root.data is greater than right.min 
+	return new Info (false, size, min, max)
+    -> if isBst for both left and right is true update maxBst = Math.max(maxBst, size) 
+         	return new Info (true, size, min, max)
+    -> lastly return new Info (false, size, min, max)
 
 7. Merge 2 BST:
     -> AL <Integer> inorder
@@ -331,6 +379,7 @@ Hashing:
 
 
 Tries:
+
 * tries are prefix trees also known as re'trie'val (the name comes from here) trees which work 
 on prefix of words, the are k-nary trees and are bulky, requires huge amount of space but gives us 
 a nice time complexity, as the height of the tree decreases the time complexity of also decreases.
@@ -402,6 +451,458 @@ So we will store all the prefix of all the suffix of the given string in the Tri
 
 
 
+Graphs:
+*Network of nodes.
+
+Properties:
+1. Vertex (also know as the node witch stores the value)
+2. Edge (path between two nodes/vertices)
+3. Weight (it is the value of the edge, can be -ve or +ve)
+
+There are three type of edges:
+1. Uni-directed (can reach a node but cannot come back to the previous node through same path)
+2. Bi-directed (can travel both sides forwrd as well as backward)
+3. Undirected (no direction give can travel in any directions if path exists)
+
+
+1. BFS (breadth first search)
+
+*we start from the source node and visit all the neighbours/children of the current node we are on
+and then move to the next node and repeat the same, we use a boolean vis[] array to keep check of 
+the nodes we have already visited.
+    -> it is an iterative function
+    -> create a queue 'q' and add the source node in the queue (i.e 0)
+    -> create a boolean vis[] array if size equal to the graph.length;
+    -> traverse the queue using while loop until it gets empty
+    -> curr = q.remove()
+    -> now print curr and mark current as visited
+    -> now using a for loop travers all the nodes connected to the curr node
+    -> 0 to graph[curr].size() 
+    -> Edge e = graph[curr].get(i)
+    -> add the destination node (i.e e.dest) into the queue
+
+
+2. DFS (depth first search)
+
+*we start from the given source node and go to the 1st neighbour until we reach the last node.
+Note: a graph could have move than one dfs traversals.
+    -> it is a recursive function
+    -> pass the graph, current node (curr) and the vis[] array to the function
+    -> mark the curr node visited after printing the curr node
+    -> using a for loop traverse graph[curr]
+    -> Edge e = graph[curr].get(i)
+    -> if the e.dest is not visited call the function for e.dest
+
+
+Q 1. Has Path*
+    -> pass graph, source, destination and vis[] array to the function
+    -> if(source == destination) return true
+    -> mark vis[source] == true
+    -> traverse graph[curr] using for loop
+    -> Edge e = graph[curr].get(i)
+    -> check 2 conditions (&&):
+	1. !vis[e.dest]
+ 	2. function(graph, source == e.dest, destination, vis)
+    -> if both are true return true
+    -> lastly return false        
+
+
+3. Connected Components
+
+They are set of vertices that are connected to each other through an edge and we can reach every other node from 
+each node inside one connected component, a BST is also a graph. To findconnected components we use BFS and DFS in 
+two parts. 1st part is the loop to traverse all the nodes in the graph and the second function is the helper/util function.
+	
+	-> pass the AL <Edge>[] graph to the bfs function
+ 	-> create a boolean[] vis array of size graph.length
+          -> for loop 0 to graph.length
+	-> *check if not visited (don't check in the case of DFS)
+	-> run the bfsUtil function in it passing the graph and vis[] array in the function
+	-> run the dfsUtil function in it passing the graph, i (curr node) and vis[] array 
+	
+
+ 	bsfUtil
+	-> create a queue of integer type
+	-> add 0 as initial element to the queue
+ 	-> curr = q.remove()
+ 	-> if the not visited mark visited and print data 
+	-> for loop 0 to graph[curr].size() traversing all the neighbours of curr node
+	-> Edge e = graph[curr].get(i)
+	-> add e to the queue q.add(e)
+
+	dfsUtil
+	-> print the curr node
+	-> mark it as visited
+	-> travers all its neighbours 0 to graph[curr].size()
+ 	-> Edge e = graph[curr].get(i)
+	-> if not visited call the function for e.dest
+
+
+4. Cycle Detection (undirected graph)
+(45min+)
+
+Approach (dfs used):
+If we are on a node and all the neighbours of that nodes already exists it means that there exists another path
+to reach those nodes, in this case cycle exists. There are three cases for a nodes:
+
+case 1:
+	vis[neighbour] -> true & parent -> false
+	In this case return true as the cycle exists because one of the neighbour of the current node is
+	already visited and it is not the parent of the current node so there exists another path to reach
+	that node which means cycle exists in the graph.
+
+case 2:
+	vis[neighbour] -> true & parent -> true
+	In this case the neighbour of the current node is visited and is also the parent of the current node 
+	so in this case we continue as we cannot say anything if the cycle exists or not.
+
+case 3:
+	vis[neighbour] -> false
+	In this case we normally use dfs to traverse as the neighbour is not visited.
+
+*Note: we will use the same method used in connected componets to traverse the graph. 
+    -> create a detect (boolean) function that takes AL <Edge>[] graph as the input
+    -> create a boolean array and traverse all the nodes using for loop
+    -> if the node is not visited call the detectUtil funtion
+    -> pass the graph, vis array, current node and the parent(initially -1) to the 'util' function
+    -> inside 'util' funtion make the curr node visited == true
+    -> run a for loop from 0 to graph[curr].size()
+    -> Edge e = graph[curr].get(i)
+    -> if e.dest is not visited run the 'util' function for e.dest as curr node and curr as its parent
+    -> if the util function for e.dest return true then return true
+    -> in else case if e.dest is visited && e.dest != parent of curr node return true
+    (e.dest != par means that the neighbour is not the parent of our current node)
+    -> lastly return false in both the functions
+
+
+5. Bipartite Graph
+(1hr +)
+
+*Defination: It is a graph whose vertices can be divided into two independent sets U and V such that every 
+edge(u, v) either connects a vertex from U to V or a vertex from V to U. In other words from every edge(u, v)
+either u belongs to U and v belongs to V or u belongs to V and v belongs to U. We can also say that there is no
+edge that connects the vertex of same set.
+
+Approach (bfs used):
+We are going to use colors (two different) to divide the graph into two parts. We will be using a color array.
+-1 -> no color
+0 -> yellow
+1 -> blue
+
+case 1:
+	color[neighbour] = same
+	return false
+
+case 2:
+	color[neighbour] = different
+	continue
+
+case 3:
+	color[neighbour] = no color
+	give it a different color
+
+    -> create bipartite function and pass AL <Edge>[] graph to the function
+    -> create color array of size graph.length
+    -> initialize all the values -1 in the col array
+    -> create a queue
+    -> traverse the graph using the for loop
+    -> check if col[i] == -1
+    -> if true then make col[i] = 0 and add i into the queue
+    -> now run a while loop unit queue is not empty
+    -> int curr = q.remove()
+    -> now for loop from 0 to graph[curr].size()
+    -> Edge e = graph[curr].get(i)
+    -> now check if col[e.dest] == -1
+    -> if true create a next color variable(nxtCol)
+    -> initailize it with the opposite color(i.e of the curr node) 
+    -> nxtCol = (col[curr] == 0) ? 1: 0
+    -> put the color of the neighbour node as nxtCol (col[e.dest] == nxtCol)
+    -> add e.dest to the queue
+    -> in else if condition check if the neighbour and the curr node has the same color
+    -> else if(col[e.dest] == col[curr]) is true, they have same color so return false
+    (else if condition corresponding to if(col[e.dest] == -1) )
+
+
+6. Cycle Detection (directed graph)
+
+Approach:
+We will be using a modified DFS approach with an explicit stack.
+implicit -> the stack which is formed while execution a recursive function
+explicit -> the stack that we make other than the recursive stack
+
+We will use a boolean stack to store the visited neighbours, if the neighbours are present in the stack it 
+would return true, else if there are no neighbours it would return false.
+
+    -> create a detect function which takes AL <Edge>[] graph as the input
+    -> create a boolean vis[] and stack[] array of size = graph.length
+    -> traverse the graph using for loop from 0 to graph.length
+    -> if any index is not visited run 'util' funtion for it
+    -> 'util' function take the graph, i-> curr node, vis[] and stack[] as input
+    -> in 'util' make vis[curr] & stack[curr] == true
+    -> for loop from 0 to graph[curr].size()
+    -> Edge e = graph[curr].get(i)
+    -> if e.dest exists in the stack return true to main function
+    -> if e.dest is not visited && 'util' for e.dest give true, return true to main function
+    -> when the for loop ends put stack[curr] = false (popping out of the stack)
+    -> lastly return false in both the functions
+
+7. Topological Sort
+
+Directed
+Acyclic 		Topological sort is used on these graphs (DAGs)
+Graphs
+
+It is a linear order of vertices such that every directed edge u -> v, the vertex u comes before v in order, we 
+use dfs to traverse the graph and stack to store the nodes (which comes 1st and which comes last).
+
+    -> create a topSort function which takes AL <Edge>[] graph as input
+    -> create a visited array and a stack of integer type
+    -> use a for loop to traverse all the nodes of the graph, 0 to graph.length
+    -> if an index is not visited run the 'util' function for the index
+    -> 'util' function takes graph, i-> curr node, vis[] and stack s as inputs
+    -> in 'util' function mark curr nodes as visited
+    -> for loop form 0 to graph[curr].size;
+    -> Edge e = graph[curr].get(i)
+    -> if e.dest is not visited run the 'util' function for e.dest as curr node
+    -> after the loop ends push curr in the stack 
+    -> output the stack values in the topSort function after the for loop
+
+
+8. Kahn's Algorithm
+(1hr+)
+
+(topological sort using BFS approach)
+in-degree -> number of edges coming into the node
+out-degree -> number of edges going out of the node
+
+Approach:
+We will calculate the in and out degree of each node. 
+** In a DAG there always exists a node which has in-degree of 0 and a node that has out-degree of 0.
+
+    -> create a function inDegree to calculate the indegree of each node
+    -> the inDegree function takes the graph and an array indeg[graph.length] as inputs
+    -> using a for loop travers the nodes of the  graph 0 to graph.length
+    -> using a nested loop traverse the arrayList associated with each node graph[i].size()
+    -> Edge e = graph[i].get(j)
+    -> increase the indegree of e.dest by one indeg[e.dest]++
+    (as there exists one path to reach the node so number of incoming edges (indegree) will be increased)
+    -> now for the topSort (main function), take graph as the input
+    -> create a new array indeg[], pass the array and the graph to the inDegree function
+    -> now the indeg[] array stores the indegree of each node
+    -> create a queue of integer type and add all the nodes with indegree == 0 into the queue
+    -> using a while loop traverse the queue
+    -> int curr = q.remove(), print curr
+    -> for loop 0 to graph[curr].size()
+    -> Edge e = graph[curr].get(i)
+    -> now decrease the indegree of e.dest = indeg[e.dest]--
+    -> if indeg[e.dest] becomes 0 add it to the queue
+
+
+Q 2. All Path 
+(Easy Question)
+    -> create a function paths that takes the graph, src, dest and a string path as input
+    -> base: if the src == dest print path+src and return
+    -> using a for loop travere the neighbours of src node i.e from 0 to graph[src].size()
+    -> Edge e = graph[src].get(i)
+    -> call the path function for e.dest as the source and add src to path
+    -> paths(graph, e.dest, dest, path+src)
+
+
+9. Dijkastra's Algorithm
+(1hr 30min+)
+
+(gaand faaad code h iska)
+*shortest path from a given source to all the nodes in the graph (weighted & directed graph).
+It is a greedy algorithm in graphs.
+
+Logic behind Dijkastra's Algo:
+Taking 3 nodes 0, 1 and 2:
+	0 to 1 edge wt = 2
+ 	1 to 2 edge wt = 4
+	there is no direct path from 0 to 2
+
+0 is the src node:
+** If there exist a direct path from the src node to another node then the distance from the src node to the dest
+node becomes equal to the weight of the edge. If there is no direct path from src to the dest node then the distance
+between the nodes is said to be infinity so
+0 to 1 distance = 2
+0 to 2 distance  = infinity as there exist no direct path
+
+0 is the src node, 1 is 'u' and 2 is 'v':
+dist[u] = 2
+wt(u,v) = 4  (weight of the edge between u and v)
+dist[v] = infinity
+
+**main logic behind the code:
+if dist[u] + wt(u,v) is less than dist[v] then
+dist[v] = dist[u] + wt(u,v)
+
+*initially take the distance from src to all other nodes as infinity
+    -> add wt property to the edge class
+    -> create a pair class that implements comparable interface
+    -> it stores the node and the path, both integers
+    -> compareTo = return this.path - p.path
+    -> creat dijkastra function that takes the graph and int src as the input
+    -> create a dis[graph.length] array and initialize all the values as infinity except the src node
+    -> create a boolean vis[graph.length] array and a PriorityQueue <Pair> pq = new PriorityQueue
+    -> add (new Pair(0,0) ) to the pq
+    -> traverse the pq using while loop until !pq.isEmpty()
+    -> Pair curr = q.remove()
+    -> if curr.node is not visited
+    -> first mark the node as visited
+    -> for loop form 0 to graph[curr.node].size()
+    -> Edge e = graph[curr.node].get(i)
+    -> int u = e.src
+    -> int v = e.dest
+    -> int w = e.wt
+    -> if the sum of dis[v] and w is less than dis[u]
+    -> update dis[u] = dis[v] + w
+    -> after the while loop output all the values of the dis[] array
+
+
+10. Bellman Frod's Algorithm
+
+*shortest path from source to all vertices, supports negative vertices that Dijkastra'a Algo does not support.
+Note: does not work for negative weighted cycle
+
+    -> create a function BF that takes graph as the input
+    -> create a dis[graph.length] array 
+    -> initialise all the index as infinity except the source node
+    -> 1st for loop 0 to V-1  (V = graph.length)
+    -> 2nd for loop 0 to graph.length
+    -> 3rd for loop 0 to graph[j].size()
+    -> Edge e = graph[j].get(k)
+    -> int u = e.src
+    -> int v = e.dest
+    -> int w = e.wt
+    -> if dis[u] != infinity and dis[u] + w is less than dis[v]
+    -> update dis[v] with dis[u] + w
+    -> after all 3 for loops output the values stored in dis[] array
+
+
+11. Prim's Algorithm
+
+*MST (minimum spanning tree)
+A MST is a subset of edges of a connected edge weighted graph that connects all the vertices
+together without any cycle and with minimum possible total edge weight.
+** sum of weight = minimum possible
+
+    -> create a Pairs class that implements the Compareable interface
+    -> it stores the cost and the vertex and sorts based on cost i.e this.cost - p.cost
+    -> the main prims function takes the graph as the input
+    -> create a boolean[] vis array of size graph.length
+    -> create a PriorityQueue <Pair> q = new PriorityQueue<>()
+    -> add new Pair(0, 0) to q and create a new variable int cost = 0
+    -> traverse q using while loop
+    -> Pair curr = q.remove()
+    -> if curr.v is not visited
+    -> 1st mark curr.v as visited and add curr.c to the cost (variable we created)
+    -> for loop 0 to graph[curr.v].size()
+    -> Edge e = graph[curr.v].get(i)
+    -> q.add(new Pair(e.dest, e.wt))
+    -> after while loop is finished return cost
+
+
+Q 3. Cheapest Flight with K stops
+    -> take n = flights.length where flights is a 2D array
+    -> create a graph of size == n and push the graph and flights array into create graph function
+    -> create a distance array dis[] = new int[n]
+    -> except the src node put all the values in dis[] array == +infinity
+    -> create a Queue using Info class 
+    -> Info class contains vertex, cost and the no. of stops
+    -> add vertex = src, cost = 0 and stops = 0 in the queue
+    -> run a while loop until queue is not empty
+    -> Info curr = q.remove()
+    -> if curr.stops becomes greater than k break the loop
+    -> for loop from 0 to graph[curr.vertex].size()
+    -> Edge e = graph[curr.vertex].get(i)
+    -> v = e.dest and w = e.wt
+    -> if curr.cost + w is less than dis[v] and curr.stops <= k then dis[v] = curr.cost + w
+    -> q.add( new Info(e.dest, dis[v], curr.stops+1) )
+    -> after while loop check if dis[dest] is +infinity, if true return -1
+    -> else return dis[dest]
+
+
+Q 4. Connecting Cities
+    -> create a edge class that will contain the destination and the cost
+    -> @Override and return this.cost - e.cost (ascending/increasing order)
+    -> create a connectCities function that takes a 2d array (int[][] cities) as input
+    -> create a variable finalCost = 0 to store the cost and return it at last
+    -> create a boolean[] vis array with length == cities.length
+    -> create a PQ with Edge type and add new Edge(0, 0) initially
+    -> run a while loop until PQ is not empty
+    -> Edge curr = pq.remove()
+    -> if curr.dest is not visited 
+    -> mark vis[curr.dest] == true
+    -> update finalCost i.e. += curr.cost
+    -> for loop from 0 to cities[curr.dest].length
+    -> if cities[curr.dest][i] is not equal to 0
+    -> add new Edge( i, cities[curr.dest][i] ) to the pq
+    -> after the while loop return finalCost
+
+
+12. Disjoint Set
+(union and find)
+
+Logically stores elements in form of groups/sets. We use find function to find to which set does the element
+belongs to and union function to join 2 sets and make them into a single group.
+
+Implementation:
+Parent . union by rank
+We use 2 arrays par[] and rank[] where initially the element itself is the parent and the rank of all the elements is 0.
+find -> returns the leader/parent of the groups/set
+union -> joins the groups/sets
+*union is always done between the leaders/parents of the two groups/sets.     
+
+    -> create a global variable int n = 7 (or any size)
+    -> create two global arrays par[n] and rank[n]
+    -> create void function init() to initialize the parents of each node (par[i] == i)
+    -> create a function find that takes an integer as the input
+    -> if x == par[x] return x
+    -> else call the function for par[x]
+    -> create a union functin that take two integers as the inputs
+    -> create a variable int parA to store the parent of integer a
+    -> create a variable int parB to store the parent of integer b
+    -> parA = find(a) and parB = find(b)
+    -> if rank of both parents is same make any one of them as the parent and increase its rank
+    -> else if rank of parA is greater make it the parent of parB and increase its rank
+    -> last case (else) make parB the parent of parA and increase its rank
+
+Optimisation (path compression):
+int find(int x) {
+	if(x == par[x]) return x;
+	return par[x] = find(x);
+}
+    -> par[x] = find(x) is the optimisation.
+    -> we will store the parent for the current node that find function will return
+    -> after this we don't have to call the find function for all the element
+    -> it would make the supreme leader the parent of all the element
+    -> eg:
+	if 3 was the parent of 6 and 6 is the parent of 4 but the parent of 3 is 1, so we would make 1 the parent of 6 as well
+	as the parent of 4 so the path gets compressed and the 1 becomes the parent of 3, 4 and 6 as the find function previously
+	aslo would have returned 1 if we called it for any element i.e. 3, 4 or 6.
+
+
+13. Kruskal's Algorithm
+Algorithm used to find out MST, Greedy Approach.
+1. Stores Edges
+2. Take minimum cost edges (does not form cycle)
+V nodes -> V-1 edges are needed
+
+    -> create Edge class the implements Comparable interface
+    -> it contains the src, dest & wt and return this.wt - e.wt
+    -> create a function kruskal that takes int V as input
+    -> AL<Edge> edges = new AL<>() and pass it into createGraph function
+    -> call the init() function to initialize the parents of nodes
+    -> use Collections.sort(edges) to sort the edges in ascending order
+    -> create integers mst and cnt and initialise them with 0
+    -> for loop (int i=0; cnt < V-1; i++)
+    -> Edge e = edges.get(i)
+    -> parA = find(e.src)
+    -> parB = find(e.dest)
+    -> if parA and parB are not equal union(e.src, e.dest) 
+    -> add e.wt to mst and increase cnt by 1 (cnt++)
+    -> lasty return mst
 
 
 
@@ -409,6 +910,26 @@ So we will store all the prefix of all the suffix of the given string in the Tri
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
 
 
