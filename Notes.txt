@@ -177,7 +177,18 @@ BT (Binary Tree):
     -> now change value of root.data with (left + right + newLeft + newRight)
     -> lastly return data (it contains the value of the root node) 
 
-6. Top View
+6. Diameter of a Tree
+    -> create a Info class that stores the height and diameter
+    -> create a Info type function that takes root node as input
+    -> if root == null return new Info( 0(height), 0(diameter) )
+    -> call the function for left and store in Info left
+    -> call the function for right and store in Info right
+    -> now sd(self diameter) = left.height + right.height + 1 
+    -> height = maximum of left height and right height + 1
+    -> diameter = maximum of sd, left and right diameter
+    -> lastly return new Info(height, diameter) 
+
+7. Top View
     -> create a Info class that has an int hd (horizontal distance) and Node node
     -> using Info class create a Queue
     -> create a HashMap <Integer, Node>  m
@@ -197,7 +208,7 @@ BT (Binary Tree):
     -> in the same if statement update max = Math.max(max, curr.hd+1)
     -> after while loop run a for loop from min to max and output map.get(i).data
 
-6. Sub tree of another tree ***
+8. Sub tree of another tree ***
     (covers 2-3 questions)
     -> create a function check that take to inputs Node root and Node subroot
     -> if root == null return false
@@ -310,16 +321,19 @@ Heap (Priority Queues):
 
 -> CBT(complete binary tree):
     It is a tree which has all the levels completely filled
-    except the last left, node are fill from left to right.
+    except the last level, node are fill from left to right.
          
 1. Sliding Window:
-    -> PriorityQueue of Pair class type
-    -> Pair class uses implements Comparable function (val, idx)
-    -> p.val - this.val (descending order)
-    -> add first k elements to PQ 
-    -> res array = n-k+1 (size of the answer array) 
-    -> res[0] = p.peek().val (the first value in our priority queue)
-    -> while index of 1st element in pq is <= (i-k) => q.remove() 
+    -> create a class Window that takes value and index (constructor)
+    -> sort the elements in descending order based on value in the class p.val - this.val
+    -> in the main functino create a PriorityQueue i.e. 'pq' of Window type
+    -> add first k elements in the pq and create an array int[] res = new int[n-k+1]
+    -> res[0] = pq.peek().val
+    -> for loop from i = k to arr.length
+    -> if pq.size() > 0 && the index of the element in pq is greater than (i-k) then pq.remove()
+        ( while(pq.size() > 0 && pq.peek().index <= (i-k)) pq.remove() )
+    -> pq.add(new Window(arr[i], i))
+    -> res[i-k+1] = pq.peek().value
 
 
 
@@ -327,7 +341,7 @@ Hashing:
 
 -> HashMap <key(type), value(type)> m = new HashMap<>()    (no defined order of element)
 -> LinkedHashMap <K,V> m = new LinkedHashMap<>()    (output elements in the same order added to the map)
--> TreeMap <K,V> m = new TreeMap<>()    (stored and outputs element in sorted order, sorting based on keys)
+-> TreeMap <K,V> m = new TreeMap<>()    (stors and output element in sorted order, sorting based on keys)
 
 1. Majority Element
     -> let number be the key and occurence the value
@@ -335,38 +349,42 @@ Hashing:
     -> output the max occured m.get(key) > max (update max)
 
 2. Anagram
-    -> add the characters of 1st string into a hashMap
-    -> HashMap < Character, Integer (occurence) > m = new HM<>()
-    -> check if( m.get(character of 2nd string) != null) exists in map or not
-    -> now compare if(m.get(character of 2nd string) == 1) m.remove(ch)
-    -> else decrease the value of occurence ( m.put(ch, m.get(ch)-1) )
-    -> if does not exists in 1st string (map) return false
-    -> if map isEmpty() return true  ( return m.isEmpty() )
+    -> create a boolean function that take two strings a & b as inputs
+    -> create a HashMap <Character, Integer(occurence)> m = new HashMap<>()
+    -> add all the elements of string a into the map (increase the occurence of already present)
+       ( m.put(a.charAt(i), m.getOrDefault(a.charAt(i), 0)+1) )
+    -> for loop traversing the string b
+    -> if m.get(b.charAt(i)) != null then check 
+	1. if occurence == 1 then remove(b.charAt(i))
+  	2. else decrease the occurence by 1
+	( m.put(b.charAt(i), m.get(b.charAt(i)-1)) )
+    -> lastly return m.isEmpty()
 
 3. Subarray Sum 0**
-    -> HashMap <sum, index> m => we will store the index of sum
-    -> if we find sum in our map update len (largest subarray)
-    -> subLen = j - m.get(sum) length of the subarray with sum 0 
-    -> compare it with len = Math.max(len, subLen)   
+    -> create a HashMap <Integer(sum), Integer(index)> m = new HashMap<>();
+    -> create two variables sum = 0 and len = 0 (to store length of longest with sum = 0)
+    -> for loop from 0 to array.length
+    -> add the elements to sum => sum += arr[i]
+    -> check if the map contains the sum
+    -> else put the sum and the index i in the map
+    -> if m.containsKey(sum) update length:
+	len = Math.max(len, i - m.get(sum))
 
 *Here if we get the sum again at any point in the array it means that the sum 
   we calculated has already occured before in the array and if we take the 
   sum of the elements between the current index (where we found the sum) 
-  and the previous index+1 (where we found the sum 1st time) it would be 0.
-  j - m.get(sum) would give us the length of the current subarray with sum = 0.
-  This works only when we need to find the subarray with max length, we can
-  output the largest subarray but we cannout output all the subarrays with 0 sum.  	
+  and the previous index+1 (where we found the sum 1st time) it would be 0
+  i - m.get(sum) would give us the length of the current subarray with sum = 0.
 
 4. Subarray Sum k***
-    -> sum(j)-sum(i) == k we can deduce  sum(j)-k == sum(i)
-    -> HashMap <sum, count> m => we would store freqency of sum
-    -> put sum=0 and count=1 by default in the map
-    -> if we find the sum-k in our map we would update the ans
-    ->  ans += m.get(sum-k) => here we will add the count of the sum in ans
-    -> we would always store our sum/increase its frequency in each step
-    -> m.get(sum, m.getOrDefault(sum, 0)+1)
-    -> lastly output the ans
-
+    -> create a HashMap <Integer(sum), Integer(count)> m = new HashMap<>()
+    -> put sum = 0 and count = 1 in the map
+    -> create two variable sum = 0 and cnt = 0
+    -> for loop from 0 to array.length
+    -> add the ith element to the sum i.e. sum += arr[i]
+    -> if map contains the sum-k value then increase the cnt by the values stores in map
+	( cnt += m.get(sum - k) )
+    -> lastly m.put(sum, m.getOrDefault(sum, 0)+1)
 
 -> HashSet <Integer> s = new HashSet<>() (unodered, no defined order)
 	-> Iterator it = set.iterator()
@@ -906,17 +924,300 @@ V nodes -> V-1 edges are needed
 
 
 
+DP (Dynamic Programming):
+
+(**! interview)
+Dynamic Programming is a technique in computer programming that helps to efficiently solve a class of problems
+that have overlapping subproblems and optimal structure properties.
+
+Ways of DP:
+1. Memoization (top down approach)
+    -> normal recursion
+    -> subproblem (store and reuse the returned value)
+
+2. Tabulation (bottom up approach)
+     -> no recursion, we use iterations 
+ *more efficient and no overflow condition (base case)
+   uses table for iterations 
+
+eg:- Fibonacci Series
+0 1 1 2 3 5 8 13 21 34 55 89 .....................
+
+for n = 6 ans = 8
+in this case fib[2] is called 5 times, same for fib(3) and fib(4)
+
+DP approach:
+1. Memoization
+    -> we will use an array to store the fib[n] (int[] f = new int[n+1])
+    -> size is n+1 as we will store number from 0 to n (both included)
+    -> return f[n] = fib(n-1, f) + fib(n-2, f)
+
+2. Tabulation 
+    -> create array int[] dp = new int[n+1] 
+    -> as the base case in recursion is for 0 and so initialize dp[0] = 0 and dp[1] = 1
+    -> now a for loop from 1 to n+1
+    -> inside for loop => dp[i] = dp[i-1] + dp[i-2]
+    -> alternate if dp[0] = 0 is only initialized not dp[0]
+    -> dp[i] = dp[i-1] + (i == 1 ? 1 : dp[i-2])
+
+7 Important Questions:
+1. Fibonacci
+2. 0 - 1 Knapsack
+3. Unbounded Knapsack
+4. LCS (longest common subsequence)
+5. Kadan's Algorithm (arrays)
+6. Catalan Number
+7. DP on Grid (2d arrays)
 
 
+Q1. Climbing Stairs (Fibonacci)
+Count the number of ways to reach the nth stair. The person can climb either 1 or 2 stairs at a time.
+
+1. Memoization
+    -> create a function 'fib' that takes an integer n and an array int[] f as inputs
+    -> if n == 0 or n == 1 return n (base case)
+    -> if n is present in the array f[] return f[n]
+    -> if( f[n] != 0) return f[n]
+    -> else return fib(n-1, f) + fib(n-2, f) and store it in f[n]
+
+2. Tabulation 
+    -> create a function 'fib' that takes and integer n as input
+    -> create an array = int[] dp = new int[n+1]
+    -> initialise dp[0] = 0 (base case)
+    -> for loop from 1 to n+1
+    -> dp[i] = dp[i-1] + (i == 1 ? 1 : dp[i-2])
+    -> lastly return dp[n]
+
+Q2. 0 - 1 Knapsack
+0 -> item has not been taken
+1 -> item has already been taken
+
+item(value, weight) => tow contitions
+ 	1. exlude (0)
+ 	2. include (1)
+		-> cost after including the item		
+		-> cost after exluding the item
+		(max of both is returned)
+
+1. Memoization
+    -> create an array = int[][] dp = new int[items+1][maxWeight+1]
+    -> initialise all the values in the dp[i][j] = -1
+    -> create a function KS that takes val[], wt[], W, n and dp[][] as the input
+    -> if n == 0 || W == 0 return 0
+    -> if dp[n][W] != -1 return dp[n][W]
+    -> if the wt of nth item is less than or equal to W (wt[n-1] <= W)
+    (this is the include case (1))
+    -> exclude case: dp[n][W] = KS(val, wt, W, n-1, dp)
+    -> include case: dp[n][W] = val[n-1] + KS(val, wt, W - wt[n-1], dp)
+    -> return the max of the include and exclude case
+    -> lastly return dp[n][W] = KS(val, wt, W, n-1, dp)
+    (this is the exclude case (0))
+
+2. Tabulation
+    -> create a function KS that take val[], wt[] and W as inputs
+    -> create an arry = int[][] dp = new int[val.lenght+1][W+1]
+    -> for loop = 1 to val.length + 1(i) and 1 to W+1(j)
+    -> int v = val[i-1] 
+    -> int w = wt[i-1]
+    -> if w <= j 
+    -> int exclude = dp[i-1][j]
+    -> int include = v + dp[i-1][j-w]
+    -> dp[i][j] = Math.max(include, exlude)
+    -> else dp[i][j] = dp[i-1][j]
+    -> lastly return dp[n][W]
 
 
+Q3. Target Sum
+** not understood how the code works
+num[] = {4, 2, 7, 1, 3}
+targetSum = 10
+ans = true
+
+total subsets = 2pow(n)
+as every element has 2 choices to be included or excluded
+
+1. choice of elements
+2. limit on max allowed capacity		   (similar to knapsack)
+3. value = weight
+
+*size of array and targetSum are two variables
+    -> create a boolean function targetSum that takes int[] arr and targetSum as inputs
+    -> create an array int[][] dp = new int[n+1][targetSum+1]
+    -> for all dp[i][0] mark true
+    -> outer loop 0 to n+1 and inner loop 0 to targetSum+1
+    -> int v = arr[i-1]
+    -> if (v<=j && dp[i-1][j-v] == true) dp[i][j] = true
+    -> else if (dp[i-1][j] == true) dp[i][j] = true
+    -> lastly return dp[n][targetSum]
 
 
+Q4. Unbounded Knapsack
+val[] = 15, 14, 10, 45, 30
+wt[] = 2, 5, 1, 3, 4				ans = 100
+W = 7
+*here the quantity of each item is infinite
+
+*(value & weight) and W are two variable
+    -> create an int function uKnapsack that take int[] val, int[] wt and W as inputs
+    -> create an array int[][] dp = new int[val.length][W+1] initally all values are 0
+    -> outer = 1 to val.length+1 and inner = 1 to W+1
+    -> int v = val[i-1]
+    -> int w = wt[i-1]
+    -> if the weight(w) is less than or equal to the capacity(j)
+    -> include the item => int in = v + dp[i][j-w]
+    -> exclude the item => int ex = dp[i-1][j]
+    -> dp[i][j] = Math.max(in, ex)
+    -> else exclude => dp[i][j] = dp[i-1][j]
+    -> lastly return dp[val.length][W]
 
 
+Q5. Coin Change
+(unbounded knapsack variation and an interview question)
+
+coins[] = {2, 3, 5, 6}
+sum = 10
+ans = total number of ways i.e. 10
+
+*coins(idx) and sum are the two variables
+    -> create a funtion coinChange the take the coins[] array and the sum as input
+    -> create an array int[][] dp = new int[coins.length+1][sum+1] initially all values are 0
+    -> initiallise all the value in the 1st column as 1
+    -> outer = 1 to coins.length+1 and inner = 1 to sum+1
+    -> int c = coins[i-1]
+    -> if value of coin(c) is less than or equal to sum(j)
+    -> include the coin => int in = dp[i][j-c]
+    -> exclude the coin => int ex = dp[i-1][j]
+    -> dp[i][j] = in + ex (as we want the total number of ways)
+    -> else exclude => dp[i][j] = dp[i-1][j]
+    -> lastly return dp[coins.length][sum]
 
 
+Q6. Rod Cutting
+len[] = {1, 2, 3, 4, 5, 6, 7, 8}
+price[] = {1, 5, 8, 9, 10 , 17, 17, 20}		ans = 22
+rodLength = 8
 
+*(length & price) and rodLength are the two variables
+    -> create a function rodCutting that takes int[] len, int[] price and int R(rodLength) as inputs
+    -> create an array int[][] dp = new int[len.length+1][R+1] initially all values are 0
+    -> outer = 1 to len.length+1 and inner = 1 to R+1
+    -> int l = len[i-1]
+    -> int p = price[i-1]
+    -> if the length(l) is less than or equal to the rodLength(j)
+    -> include => int in = p + dp[i][j-l]
+    -> exclude => int ex = dp[i-1][j]
+    -> dp[i][j] = Math.max(in, ex)
+    -> else dp[i][j] = dp[i-1][j]
+    -> lastly return dp[len.length][R]
+
+Q7. Longest Common Subsequence (LCS)
+A subsequence of a string is a new string generated from the original string with same characters (can be none),
+deleted without changing the *relative order of remaining characters.
+
+a = "abcde" & b = "ace"
+ans = 3 ("ace")
+
+a = "abcdge" & b = "abedg"
+ans = 4 ("abdg")
+
+1. Recursion
+    -> create a function LCS that take the two string(a & b) and the length of the strings(n & m) as input
+    -> if n || m, any one of them becomes 0 return 0
+    -> if a.charAt(n-1) matches b.charAt(m-1) return LCS(a, b, n-1, m-1) + 1
+    -> else decrease the length of one string, pass it in the function and store it in int ans1
+    -> decrease the length of other string, pass it in the function and store it in int ans2
+    -> return the max of ans1 and ans2 inside the else paranthesis
+
+2. Memoization
+    -> create function LCS same as in recursion and a int[][] dp = new int[n+1][m+1] as inputs
+    -> if n || m, any one of them becomes 0 return 0
+    -> if dp[n][m] != -1 return dp[n][m]
+    -> if a.charAt(n-1) matches b.charAt(m-1) return dp[n][m] = LCS(a, b, n-1, m-1) + 1
+    -> else decrease the length of one string, pass it to the function and store it in ans1
+    -> decrease the length of other string, pass it to the function ans store it in ans 2
+    -> return the max of ans1 and ans2 inside the else paranthesis and store the value in dp[n][m]
+
+3. Tabulation
+    -> create a function LCS that take two strings a & b as inputs
+    -> create an array int[][] dp = new int[a.length()+1][b.length()+1] initially all values are 0
+    -> outer = 1 to a.length+1 and inner = 1 to b.length+1
+    -> if a.charAt(i-1) == b.charAt(j-1) then dp[i][j] = dp[i-1][j-1] + 1
+    -> else decrease the length of one string and store in int ans1 = dp[i-1][j]
+    -> decrease the length of other string and store in int ans2 = dp[i][j-1]
+    -> dp[i][j] = Math.max(ans1, ans2)
+    -> lastly return dp[n][m]
+
+
+Q8. Longest Common Substring
+*if we find the LCS from the starting or the end the answer remains the same
+
+a = "ABCDE" & b = "ABGCE"
+ans = 2 ("AB")
+
+    -> create a function that takes two strings a & b as inputs
+    -> create an array int[][] dp = new int[a.length()+1][b.length()+1]
+    -> outer = 1 to a.length+1 and inner = 1 to b.length+1
+    -> create a variable int ans = 0
+    -> if a.charAt(i-1) == b.charAt(j-1) then dp[i][j]  = dp[i-1][j-1]+1 
+    -> ans = Math.max(ans, dp[i][j])
+    -> else dp[i][j] = 0
+    -> lastly return dp[n][m]
+
+
+Q9. Longest Increasing Subsequence
+
+arr[] = {50, 3, 10, 7, 40, 80}
+ans = 4 ( {3, 10, 40, 80} or {3, 7, 40, 80} )
+
+    -> create a function LIS that take an array int[] arr1 as input
+    -> create a HashSet of Integer type and add all the elements from array to it
+        (this is to remove all the duplicate values from the array)
+    -> create a new array int arr2 of HashSet.size() and add all the elements from HashSet into it
+    -> sort arr2
+    -> lastly return LCS(arr1, arr2)
+
+
+Q10. Edit Distance
+
+word1 = "intention" & word2 = "execution"
+1. intention - inention (remove 't')
+2. inenetion - enention (replace 'i' with 'e')
+3. enention - exention (replace 'n' with ' x')
+4. exention - exection (replce 'n' with 'c')
+5. exection - execution (insert 'u') 
+
+ans = 5
+
+add -> a(n) b(m-1) + 1
+delete -> a(n-1) b(m) + 1
+insert -> a(n-1) b(m-1) + 1
+*find the minimum of all three
+
+    -> create a function that takes two strings a & b as input
+    -> create an array int[][] dp = new int[n+1][m+1]
+    -> if i == 0 dp[i][j] = j and j == 0 dp[i][j] = 
+(as if one string is empty the number of operations will be equal to the length of other string)
+    -> outer 1 to n+1 and inner 1 to m+1
+    -> if a.charAt(i-1) == b.charAt(j-1) dp[i][j] = dp[i-1][j-1] + 1
+    -> else perform 3 operation i.e. add, delete & replace and take the minimum
+	add -> dp[i][j] = dp[i][j-1] + 1
+  	del -> dp[i][j] = dp[i-1][j] + 1
+  	rep -> dp[i][j] = dp[i-1][j-1] + 1
+    -> dp[i][j] = min(add, del, rep)
+    -> lastly return dp[n][m]
+
+
+Q11. String Conversion
+
+a = "ABCDEF" & b = "ACEG"
+convert the string a to string b
+
+lcs = "ACE"
+-> only 3 letters are common in both the strings
+
+deletion = a.length() - lcs	(as these no. of letters are not present in the second string)
+insetion = b.length() - lcs	(as these no. of letters are extra present in the second string)
+(lcs - longest common subsequence)
 
 
 
@@ -930,13 +1231,6 @@ V nodes -> V-1 edges are needed
 
 
  
-
-
-
-
-
-
-
 
 
 
