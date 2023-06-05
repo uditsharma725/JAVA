@@ -1,0 +1,91 @@
+1. Subset Generation
+
+public static void subSet(int i, String s, StringBuilder ans) {
+        if(i == s.length()) {
+            String str = ans.toString();
+            System.out.println(str);
+            
+            return;
+        }
+
+        char c = s.charAt(i);
+        ans.append(c);
+        subSet(i+1, s, ans);
+        
+        ans.deleteCharAt(ans.length()-1);
+        subSet(i+1, s, ans);
+    }
+
+
+
+2.  Find Permutations
+
+public static void permutations(String s, StringBuilder ans) {
+        if(s.length() == 0) {
+            String str = ans.toString();
+            System.out.println(str);
+
+            return;
+        }
+
+        for(int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
+            ans.append(c);
+
+            String newStr = s.substring(0, i) + s.substring(i+1);
+            permutations(newStr, ans);
+
+            ans.deleteCharAt(ans.length()-1);
+        }
+    }
+
+
+3. Merge Sort
+
+public static void merge(int[] arr, int s, int mid, int e) {
+        int max = Integer.MAX_VALUE;
+
+        ArrayList<Integer> left = new ArrayList<>();
+        for(int i=0; i<mid-s+1; i++) left.add(arr[i+s]);
+        left.add(max);
+
+        ArrayList<Integer> right = new ArrayList<>();
+        for(int i=0; i<e-mid; i++) right.add(arr[i+mid+1]);
+        right.add(max);
+
+        int l=0, r=0;
+        for(int i=s; i<=e; i++) {
+            if(left.get(l) <right.get(r)) {
+                arr[i] = left.get(l);
+                l++;
+            }
+            else {
+                arr[i] = right.get(r);
+                r++;
+            }
+        }
+    }
+
+
+4. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

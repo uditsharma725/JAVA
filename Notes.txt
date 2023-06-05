@@ -420,7 +420,7 @@ same as inserting just if the index does not exist return false and at the end r
     -> insert the array of words into a trie
     -> create a function wordBreak that takes the key as the input
     -> using a for loop traverse the key string
-    -> search for the key.substring(0,i) in the try
+    -> search for the key.substring(0,i) in the trie
     -> call wordBreak for the left part if the key.substring(i)
     -> if both gives the ouput as true return true
     -> if the length of key becomes 0 return true (base condition)
@@ -432,11 +432,11 @@ same as inserting just if the index does not exist return false and at the end r
     -> insert the node and if already present increase the freqency
 
 *Note: frequency of root node should be initialized as -1 before passing to the function
-    -> pass two parameters root and an empty string (ans) to the function
+    -> pass two parameters root and an empty StringBuilder (ans) to the function
     -> if root becomes null return
     -> if the freq of root becomes 1 output the answer and then return
     -> traverse all the childrens of root using a for loop
-    -> if the children is not null call the function for the children and add the word to the an
+    -> if the children is not null call the function for the children and add the word to the ans
     -> if we are using stringBuilder (inside for loop):
                 char c = (char)(i+'a');
                 ans.append(c);
@@ -534,7 +534,7 @@ two parts. 1st part is the loop to traverse all the nodes in the graph and the s
 	-> pass the AL <Edge>[] graph to the bfs function
  	-> create a boolean[] vis array of size graph.length
           -> for loop 0 to graph.length
-	-> *check if not visited (don't check in the case of DFS)
+	-> *check if not visited
 	-> run the bfsUtil function in it passing the graph and vis[] array in the function
 	-> run the dfsUtil function in it passing the graph, i (curr node) and vis[] array 
 	
@@ -542,11 +542,12 @@ two parts. 1st part is the loop to traverse all the nodes in the graph and the s
  	bsfUtil
 	-> create a queue of integer type
 	-> add 0 as initial element to the queue
+	-> traverse the queue using while loop, while !q.isEmpty()
  	-> curr = q.remove()
  	-> if the not visited mark visited and print data 
 	-> for loop 0 to graph[curr].size() traversing all the neighbours of curr node
 	-> Edge e = graph[curr].get(i)
-	-> add e to the queue q.add(e)
+	-> add e.dest to the queue q.add(e.dest)
 
 	dfsUtil
 	-> print the curr node
@@ -587,8 +588,8 @@ case 3:
     -> run a for loop from 0 to graph[curr].size()
     -> Edge e = graph[curr].get(i)
     -> if e.dest is not visited run the 'util' function for e.dest as curr node and curr as its parent
-    -> if the util function for e.dest return true then return true
-    -> in else case if e.dest is visited && e.dest != parent of curr node return true
+    -> (inside previous if) if the util function for e.dest return true then return true
+    -> (outside the 1st if) else if case e.dest is visited && e.dest != parent of curr node return true
     (e.dest != par means that the neighbour is not the parent of our current node)
     -> lastly return false in both the functions
 
@@ -622,9 +623,9 @@ case 3:
     -> create bipartite function and pass AL <Edge>[] graph to the function
     -> create color array of size graph.length
     -> initialize all the values -1 in the col array
-    -> create a queue
+    -> create a queue, integer type
     -> traverse the graph using the for loop
-    -> check if col[i] == -1
+    -> check if col[i] == -1 (below everything inside this if statement)
     -> if true then make col[i] = 0 and add i into the queue
     -> now run a while loop unit queue is not empty
     -> int curr = q.remove()
@@ -643,12 +644,12 @@ case 3:
 
 6. Cycle Detection (directed graph)
 
-Approach:
+Approach (modified dfs used):
 We will be using a modified DFS approach with an explicit stack.
 implicit -> the stack which is formed while execution a recursive function
 explicit -> the stack that we make other than the recursive stack
 
-We will use a boolean stack to store the visited neighbours, if the neighbours are present in the stack it 
+We will use a boolean array (stack) to store the visited neighbours, if the neighbours are present in the stack it 
 would return true, else if there are no neighbours it would return false.
 
     -> create a detect function which takes AL <Edge>[] graph as the input
@@ -663,6 +664,7 @@ would return true, else if there are no neighbours it would return false.
     -> if e.dest is not visited && 'util' for e.dest give true, return true to main function
     -> when the for loop ends put stack[curr] = false (popping out of the stack)
     -> lastly return false in both the functions
+
 
 7. Topological Sort
 
@@ -703,7 +705,7 @@ We will calculate the in and out degree of each node.
     -> using a nested loop traverse the arrayList associated with each node graph[i].size()
     -> Edge e = graph[i].get(j)
     -> increase the indegree of e.dest by one indeg[e.dest]++
-    (as there exists one path to reach the node so number of incoming edges (indegree) will be increased)
+    (as there exists one path to reach the node so number of incoming edges, indegree will be increased)
     -> now for the topSort (main function), take graph as the input
     -> create a new array indeg[], pass the array and the graph to the inDegree function
     -> now the indeg[] array stores the indegree of each node
@@ -760,21 +762,21 @@ dist[v] = dist[u] + wt(u,v)
     -> create a pair class that implements comparable interface
     -> it stores the node and the path, both integers
     -> compareTo = return this.path - p.path
-    -> creat dijkastra function that takes the graph and int src as the input
+    -> create dijkastra function that takes the graph and int src as the input
     -> create a dis[graph.length] array and initialize all the values as infinity except the src node
     -> create a boolean vis[graph.length] array and a PriorityQueue <Pair> pq = new PriorityQueue
     -> add (new Pair(0,0) ) to the pq
     -> traverse the pq using while loop until !pq.isEmpty()
     -> Pair curr = q.remove()
-    -> if curr.node is not visited
+    -> if curr.node is not visited (all below inside this if statement)
     -> first mark the node as visited
     -> for loop form 0 to graph[curr.node].size()
     -> Edge e = graph[curr.node].get(i)
     -> int u = e.src
     -> int v = e.dest
     -> int w = e.wt
-    -> if the sum of dis[v] and w is less than dis[u]
-    -> update dis[u] = dis[v] + w
+    -> if the sum of dis[u] and w is less than dis[v]
+    -> update dis[v] = dis[u] + w
     -> after the while loop output all the values of the dis[] array
 
 
@@ -813,7 +815,7 @@ together without any cycle and with minimum possible total edge weight.
     -> add new Pair(0, 0) to q and create a new variable int cost = 0
     -> traverse q using while loop
     -> Pair curr = q.remove()
-    -> if curr.v is not visited
+    -> if curr.v is not visited (all below inside this if statement)
     -> 1st mark curr.v as visited and add curr.c to the cost (variable we created)
     -> for loop 0 to graph[curr.v].size()
     -> Edge e = graph[curr.v].get(i)
