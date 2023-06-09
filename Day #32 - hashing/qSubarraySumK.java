@@ -7,7 +7,7 @@ public class qSubarraySumK {
         Scanner sc = new Scanner(System.in);
         try {
 
-            int arr[] = {10, 2, -2, 20, 10};
+            int arr[] = {10, 2, -2, -20, 10};
             int k = -10;
 
             HashMap<Integer, Integer> m = new HashMap<>();

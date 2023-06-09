@@ -67,8 +67,129 @@ public static void merge(int[] arr, int s, int mid, int e) {
     }
 
 
-4. 
+4. kth Ancestor of a node in BT
 
+public static int kth(Node root, int n, int k) {
+        if(root == null) return -1;
+        if(root.data == n) return 0;
+        int left = kth(root.left, n,  k);
+        int right = kth(root.right, n, k);
+
+        if(left == -1 && right == -1)
+        return -1;
+
+        int max = Math.max(left, right)+1;
+        if(max == k) System.out.print(root.data);
+
+        return max;
+    }
+
+
+5. Diameter of Tree
+
+static class Info {
+        int d;
+        int h;
+         
+        public Info(int diameter, int height) {
+            this.d = diameter;
+            this.h = height;
+        }
+    }
+
+    public static Info cal(Node root) {
+        if(root == null)
+        return new Info(0, 0);
+
+        Info left = cal(root.left);
+        Info right = cal(root.right);
+
+        int sd = left.h + right.h + 1;
+        
+        int height = Math.max(left.h, right.h) + 1;
+        int diameter = Math.max(sd, Math.max(left.d, right.d));
+
+        return new Info(diameter, height);
+    }
+
+
+6. TopView of a Tree
+
+static class Info {
+        int hd;
+        Node n;
+
+        public Info(Node node, int hd) {
+            this.n = node;
+            this.hd = hd;
+        }
+    }
+
+    public static void topView(Node root) {
+        Queue<Info> q = new LinkedList<>();
+        HashMap<Integer, Node> m = new HashMap<>();
+
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        q.add(new Info(root,0));
+
+        while(!q.isEmpty()) {
+            Info curr = q.remove();
+
+            if(!m.containsKey(curr.hd))
+            m.put(curr.hd, curr.n);
+
+            if(curr.n.left != null) {
+                q.add(new Info(curr.n.left, curr.hd-1));
+                min = Math.min(min, curr.hd-1);
+            }
+
+            if(curr.n.right != null) {
+                q.add(new Info(curr.n.right, curr.hd+1));
+                max = Math.max(max, curr.hd+1);
+            }
+        }    
+        
+        for(int i=min; i<=max; i++) 
+        System.out.print(m.get(i).data + " ");
+    }
+
+
+7. Delete any node in a BST
+
+public static Node successor(Node root) {
+        while(root.left != null) root = root.left;
+        return root;
+    }
+
+    public static Node del(Node root, int data) {
+        if(root.data < data) root.right = del(root.right, data);
+        else if(root.data > data) root.left = del(root.left, data);
+
+        else {
+            if(root.left == null && root.right == null)
+            return null;
+
+            if(root.left == null) return root.right;
+            else if(root.right == null) return root.left;
+
+            Node IS = successor(root.right);
+            root.data = IS.data;
+            root.right = del(root.right, IS.data);
+        }
+
+        return root;
+    }
+
+
+8. m.put(i, m.getOrDefault(i,  0)+1)
+    Set<Integer> keys = m.keySet();
+    for(Integer i:keys) 
+	i-> key
+	m.get(i) -> value
+
+
+9. 
 
 
 
