@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class qWorkdBreak {
+public class qWordBreak {
 
     static class Node {
         Node children[] = new Node[26];

@@ -377,6 +377,8 @@ Hashing:
   i - m.get(sum) would give us the length of the current subarray with sum = 0.
 
 4. Subarray Sum k***
+	int arr[] = {10, 2, -2, -20, 10};
+          int k = -10;
     -> create a HashMap <Integer(sum), Integer(count)> m = new HashMap<>()
     -> put sum = 0 and count = 1 in the map
     -> create two variable sum = 0 and cnt = 0
