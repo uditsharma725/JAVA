@@ -205,7 +205,35 @@ public static boolean wordBreak(String key) {
     }
 
 
-10. 
+10. Remove Cycle in Linked List 
+
+public void removeCycle() {
+            Node slow = head;
+            Node fast = head;
+
+            while(fast.next != null && fast.next.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+                if(fast == slow) break;
+            }
+
+            if(fast == head && slow == head) {
+                do {
+                    fast = fast.next;
+                } while(fast.next != slow);
+
+                fast.next = null;
+            }
+            else {
+                slow = head;
+                while(slow.next != fast.next) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+
+                fast.next = null;
+            }
+        }
 
 
 

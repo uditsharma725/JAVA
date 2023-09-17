@@ -108,8 +108,8 @@ Recursion & Backtracking:
     -> a row variable to track the no. of rows
     -> when the row becomes 0 print he board and return
     -> for every board[row][col] put it equal to 'Q'
-    -> call the recursive function function and increase the row by one
-    -> remve the 'Q' from board[row][col] == 'x' in the backtracking step
+    -> call the recursive function and increase the row by one
+    -> remove the 'Q' from board[row][col] == 'x' in the backtracking step
     -> create and isSafe function to check if the position of the queen is safe or not:
 	1. check straight upwards (col remains constant)
 	2. check diagnol left
