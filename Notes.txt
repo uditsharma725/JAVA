@@ -106,7 +106,7 @@ Recursion & Backtracking:
 5. nQueens ***
     -> have a char[][] 2d array i.e. board[][] = new char[n][n] of size n X n
     -> a row variable to track the no. of rows
-    -> when the row becomes 0 print he board and return
+    -> when the row becomes 'n' print the board and return
     -> for every board[row][col] put it equal to 'Q'
     -> call the recursive function and increase the row by one
     -> remove the 'Q' from board[row][col] == 'x' in the backtracking step
@@ -134,11 +134,11 @@ BT (Binary Tree):
 2. kth ancestor of a node 
     -> create a function 'kth' that takes root node, n and k as the input
     -> if root becomes null return -1
-    -> if we found n i.e root.data == n then return 0
+    -> if we found 'n' i.e root.data == n then return 0
     -> call for root.left and store in int left
     -> call for root.right and store in int right
     -> if both are -1 return -1 to the main function
-    -> else create a max variable and store max of both (left, right) +1 in it
+    -> else create a max variable and store max of both (left, right) + 1 in it
     -> if max == k print root.data
     -> lastly return max
 
@@ -167,7 +167,7 @@ BT (Binary Tree):
     -> if one of the two becomes -1 return the other variable+1
     (return left == -1 ? right+1 : left+1)
 
-5. Tronsform to Sum Tree
+5. Transform to Sum Tree
     -> if root == null return 0;
     -> call for the left and store in int left
     -> call for the right and store in int right
@@ -194,13 +194,9 @@ BT (Binary Tree):
     -> create a HashMap <Integer, Node>  m
     -> create two variables min and max to store the min and max node (initially zero)
     -> add new Info(0, root) to the queue as the distance of root node is zero
-    -> same as lvlOrder traversal add null to the queue
     -> traverse the queue using while loop 
     -> Info curr = q.remove()
-    -> if curr is null:
-	1. if q becomes empty then break the loop
-   	2. else add null to the queue
-    -> else check if the curr.hd exists in the map or not
+    -> check if the curr.hd exists in the map or not
     -> if does not exist then put the curr.node and curr.hd in the map
     -> if curr.left.node is not null add new Info(curr.hd-1, curr.node.left) to the queue
     -> in the same if statement update min = Math.min(min, curr.hd-1)
@@ -230,7 +226,7 @@ BST (Binary Search Tree):
     -> if root is null make root the new Node containing data and return it
     -> if data is smaller than root.data then insert in the left subtree
     -> if data is greater than root.data then insert in the right subtree
-    -> lastly return root return root
+    -> lastly return root
     -> print inorder sequence to check if the tree build is correct or not
 
 2. Delete node‎
