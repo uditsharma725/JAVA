@@ -10,6 +10,12 @@ Stack:
     -> reverse(s)
     -> push at bottom(s, top) backtracking step
 
+3. Duplicate Parenthesis
+    -> 
+
+4. Next Greater Element
+    -> 
+
 
 
 Queue:
