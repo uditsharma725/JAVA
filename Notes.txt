@@ -1,7 +1,7 @@
 Stack:
 													
 1.Push at bottom
-    -> when empty push element
+    -> when empty return and push element at the same time
     -> top = s.pop()
     -> push(top) in backtracking
 
@@ -11,10 +11,31 @@ Stack:
     -> push at bottom(s, top) backtracking step
 
 3. Duplicate Parenthesis
-    -> 
+    -> first check if the string is valid or not 
+    -> it is valid if the number of opening and closing brackets is same
+    -> create a boolean function that take the string as input 
+    -> create a charater stack
+    -> traverse the string using a for loop
+    -> if we find a closing bracket i.e. ')' then:
+	1. create a cnt variable (cnt = 0)
+	2. pop elements from the stack until we find the opening bracket i.e. '('.
+	3. do it using a while loop and increase the cnt in the same loop
+ 	4. after while loop check if cnt == 0
+ 	5. return true if cnt == 0
+    -> else push the character into the stack
+    -> lastly after the for loop return false
 
 4. Next Greater Element
-    -> 
+    -> create a function that take the element array as input and return the NGE array
+    -> create a stack of integer type and a nge array of size of given array
+    -> using a for loop traverse the given array
+    -> while stack is not empty and the arr[i] > arr[s.peek()]
+    -> nge[s.peek()] = i and pop() element from the stack
+    -> after the while loop push the index 'i' into the stack
+    -> after the for loop using a while loop associate the nge of left elements as -1
+
+5. Max Rectangle Area
+    ->  
 
 
 
