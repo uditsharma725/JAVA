@@ -3,11 +3,13 @@ Stack:
 1.Push at bottom
     -> when empty return and push element at the same time
     -> top = s.pop()
+    -> call function for the stack left after popping one element
     -> push(top) in backtracking
 
 2. Reverse Stack
+    -> return if stack is empty
     -> top = s.pop()
-    -> reverse(s)
+    -> call the reverse(s) function for remainig stack
     -> push at bottom(s, top) backtracking step
 
 3. Duplicate Parenthesis
@@ -20,8 +22,7 @@ Stack:
 	1. create a cnt variable (cnt = 0)
 	2. pop elements from the stack until we find the opening bracket i.e. '('.
 	3. do it using a while loop and increase the cnt in the same loop
- 	4. after while loop check if cnt == 0
- 	5. return true if cnt == 0
+ 	4. after while loop return true if cnt = 0
     -> else push the character into the stack
     -> lastly after the for loop return false
 
@@ -35,7 +36,18 @@ Stack:
     -> after the for loop using a while loop associate the nge of left elements as -1
 
 5. Max Rectangle Area
-    ->  
+    -> create a function that takes the area of heights as input
+    -> create a variable area to store the final area and initialize it as -1
+    -> create two arrays left and right of same size as of heights array
+    -> create a stack of integer type
+    -> in the right array store the index of next smaller element of the current index to its right
+    -> same code as NGE as for the remaining assign the index of the last element
+    -> in the left array store the index of next smaller element of the current index to its left
+    -> start travesing from the end and for the remaining assign index of the first element
+    -> h = height[i]
+    -> w = right[i]  - left[i] - 1
+    -> area = Math.max(area, (h*w))
+    -> lastly return the area
 
 
 
@@ -46,7 +58,7 @@ Queue:
     -> loop the string => c = s.charAt(i)
     -> increase the freqence of character freq[c-'a']++
     -> add the character (c) to the queue
-    -> remove "c" from queue while !isEmpty() and freq[q.peek()-'a'] > 1
+    -> remove "c" from queue while queue is not empty and freq[q.peek()-'a'] > 1
     -> if q.isEmpty() sot("-1") else sot(q.peek())
 
 2. Interleave two halfs of Queue
@@ -55,30 +67,41 @@ Queue:
     -> create a final queue using the two queues
     -> add 1st element from Q1 and 2nd element from Q2
 
+3. Reverse Queue
+    -> create a function that takes the given queue 'q' as input
+    -> if q becomes empty return
+    -> data = q.peek()
+    -> q.remove()
+    -> call the function for 'q'
+    -> backtracking step add data to 'q'
+
 
 
 Linked List:
 
 1. Reverse Linked List
-    -> point the tail at the head
     -> Three pointers prev, curr and nxt
-    -> prev = null, curr = head and nxt = curr.next (initially its null)
+    -> prev = null, curr = head and nxt = null
+    -> point the tail at the head   
     -> while ( curr != null): 
 	inside the while loop initialize the nxt pointer to curr.next,
-        	we would reverse the links between the nodes by pointing the 
- 	curr.next to the prev pointer and the next of the nxt pointer 
-	to the curr pointer, after this we would update the prev pointer
-	to point at curr pointer and the curr pointer will point at nxt.
+        we would reverse the links between the nodes by pointing the 
+ 	curr.next to the 'prev' pointer and the next of the 'nxt' pointer 
+	to the 'curr' pointer, after this we would update the 'prev' pointer
+	to point at 'curr' pointer and the 'curr' pointer will point at 'nxt'.
     -> lastly we would update our original head == prev.
 
 2. Detect and Remove Cycle (Floyd's Algo)
 * we use fast and slow pointer appoach to find the cycle in the linked list.
     -> fast += 2 and slow += 1
-    -> if they meet at any point which means a cycle exists in the linked list (LL)
-    -> when they meet stop the loop and initialize slow with head (slow == head)
-    -> use a prev pointer to track the prev node (prev = fast inside while loop)
-    -> increase both fast and slow pointer by 1 (while slow != fast)
-    -> when they meet again => prev.next = null
+    -> if they meet at any point which means a cycle exists in the linked list
+    -> when they meet stop the loop
+    -> check if slow is equal to the head or not
+    -> if not then initialise slow as head
+    -> run the while loop until slow.next != fast.next
+    -> else if slow point to the head
+    -> increase fast using a while loop until fast.next != slow
+    -> lastly point fast to null
 
 3. Check Palindrome **
 *we can simply push the elements of our linked list in an arrayList and
@@ -90,6 +113,7 @@ of reversing half linked list.
     -> compare the 1st and the reversed 2nd half of the list
 
 4. Mergesort
+    -> if head || head.next is null return the head
     -> first find the mid of the linked list
     -> return type of the function will be node
     -> right head will be the next of mid
